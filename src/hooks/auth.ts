@@ -1,9 +1,12 @@
 import { createContext } from 'react'
 
 type User = {
-    id: string
-    name: string
-    email: string
+    data: {
+        id: string
+        name: string
+        email: string
+        role: "USER" | "SUPER_ADMIN"
+    }
 }
 
 export type AuthContextValue = {

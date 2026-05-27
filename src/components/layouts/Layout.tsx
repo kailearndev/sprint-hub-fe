@@ -1,23 +1,58 @@
 import { Link, useMatchRoute } from "@tanstack/react-router"
-import { Banana, BarChart2, Calendar, LayoutGrid, Logs, SquareKanban } from "lucide-react"
+import { Banana, BarChart2, Calendar, LayoutGrid, Logs, SquareKanban, User } from "lucide-react"
 import NavUser from "./NavUser"
 import { cn } from "@/lib/utils"
+import { useAuth } from "@/hooks/useAuth"
+import type { MenuItem, Role } from "@/types/sidebar.config"
 
-const menuItems = [
-    { name: 'Dashboard', href: '/dashboard', id: 1, icon: <LayoutGrid className="md:size-5 size-4" /> },
-    { name: 'Tasks', href: '/tasks', id: 2, icon: <Logs className="md:size-5 size-4" /> },
+const menuItems: MenuItem[] = [
     {
-        name: 'Kanban', href: '/kanban', id: 3, icon: <SquareKanban className="md:size-5 size-4" />
+        name: 'Dashboard',
+        href: '/dashboard',
+        id: 1,
+        icon: <LayoutGrid className="md:size-5 size-4" />,
+        role: ['SUPER_ADMIN', 'USER'],
     },
-    { name: 'Calendar', href: '/calendar', id: 4, icon: <Calendar className="md:size-5 size-4" /> },
     {
-        name: 'Report ', href: '/report', id: 5, icon: <BarChart2 className="md:size-5 size-4" />
-    }
-
-
+        name: 'Tasks',
+        href: '/tasks',
+        id: 2,
+        icon: <Logs className="md:size-5 size-4" />,
+        role: ['SUPER_ADMIN', 'USER'],
+    },
+    {
+        name: 'Kanban',
+        href: '/kanban',
+        id: 3,
+        icon: <SquareKanban className="md:size-5 size-4" />,
+        role: ['SUPER_ADMIN', 'USER'],
+    },
+    {
+        name: 'Calendar',
+        href: '/calendar',
+        id: 4,
+        icon: <Calendar className="md:size-5 size-4" />,
+        role: ['SUPER_ADMIN', 'USER'],
+    },
+    {
+        name: 'Report',
+        href: '/report',
+        id: 5,
+        icon: <BarChart2 className="md:size-5 size-4" />,
+        role: ['SUPER_ADMIN', 'USER'],
+    },
+    {
+        name: 'User',
+        href: '/user',
+        id: 6,
+        icon: <User className="md:size-5 size-4" />,
+        role: ['SUPER_ADMIN'],
+    },
 ] as const
-
 export default function Layout({ children }: { children: React.ReactNode }) {
+    const { user } = useAuth()
+
+
     const matchRoute = useMatchRoute()
 
     const isActive = (href: string) => {
@@ -26,6 +61,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         })
         return !!match
     }
+
+    const visibleMenuItems = menuItems.filter((item) =>
+        item.role.includes(user?.data.role as Role),
+    )
+
+
     return (
         <div className="min-h-dvh bg-background text-text md:flex ">
             <nav className="fixed inset-x-0 bottom-0 z-50 border-t border-border bg-surface/95 px-2 py-2 shadow-lg backdrop-blur md:sticky md:top-0 md:h-dvh md:w-64 md:border-r md:border-t-0 md:p-4 md:shadow-none flex flex-col justify-between">
@@ -35,7 +76,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         <span className="hidden md:inline">SprintHub</span>
                     </div>
                     <ul className="grid grid-cols-5 gap-1 md:block">
-                        {menuItems.map((item) => (
+                        {visibleMenuItems.map((item) => (
                             <li className="md:mb-2" key={item.id}>
                                 <Link
                                     tabIndex={0}
@@ -75,7 +116,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                 </Link>
 
                             </li>
-                        ))}
+
+                        ))
+                        }
                     </ul>
                 </div>
                 <NavUser isActive={isActive} />

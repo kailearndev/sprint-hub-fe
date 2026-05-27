@@ -19,6 +19,8 @@ import { Route as protectedKanbanRouteImport } from './routes/(protected)/kanban
 import { Route as protectedHelpRouteImport } from './routes/(protected)/help'
 import { Route as protectedDashboardRouteImport } from './routes/(protected)/dashboard'
 import { Route as protectedCalendarRouteImport } from './routes/(protected)/calendar'
+import { Route as protectedUserIndexRouteImport } from './routes/(protected)/user/index'
+import { Route as protectedUserIdRouteImport } from './routes/(protected)/user/$id'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -69,6 +71,16 @@ const protectedCalendarRoute = protectedCalendarRouteImport.update({
   path: '/calendar',
   getParentRoute: () => protectedRouteRoute,
 } as any)
+const protectedUserIndexRoute = protectedUserIndexRouteImport.update({
+  id: '/user/',
+  path: '/user/',
+  getParentRoute: () => protectedRouteRoute,
+} as any)
+const protectedUserIdRoute = protectedUserIdRouteImport.update({
+  id: '/user/$id',
+  path: '/user/$id',
+  getParentRoute: () => protectedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
@@ -80,6 +92,8 @@ export interface FileRoutesByFullPath {
   '/role': typeof protectedRoleRoute
   '/settings': typeof protectedSettingsRoute
   '/tasks': typeof protectedTasksRoute
+  '/user/$id': typeof protectedUserIdRoute
+  '/user/': typeof protectedUserIndexRoute
 }
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
@@ -91,6 +105,8 @@ export interface FileRoutesByTo {
   '/role': typeof protectedRoleRoute
   '/settings': typeof protectedSettingsRoute
   '/tasks': typeof protectedTasksRoute
+  '/user/$id': typeof protectedUserIdRoute
+  '/user': typeof protectedUserIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -104,6 +120,8 @@ export interface FileRoutesById {
   '/(protected)/role': typeof protectedRoleRoute
   '/(protected)/settings': typeof protectedSettingsRoute
   '/(protected)/tasks': typeof protectedTasksRoute
+  '/(protected)/user/$id': typeof protectedUserIdRoute
+  '/(protected)/user/': typeof protectedUserIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -117,6 +135,8 @@ export interface FileRouteTypes {
     | '/role'
     | '/settings'
     | '/tasks'
+    | '/user/$id'
+    | '/user/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/login'
@@ -128,6 +148,8 @@ export interface FileRouteTypes {
     | '/role'
     | '/settings'
     | '/tasks'
+    | '/user/$id'
+    | '/user'
   id:
     | '__root__'
     | '/(protected)'
@@ -140,6 +162,8 @@ export interface FileRouteTypes {
     | '/(protected)/role'
     | '/(protected)/settings'
     | '/(protected)/tasks'
+    | '/(protected)/user/$id'
+    | '/(protected)/user/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -219,6 +243,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof protectedCalendarRouteImport
       parentRoute: typeof protectedRouteRoute
     }
+    '/(protected)/user/': {
+      id: '/(protected)/user/'
+      path: '/user'
+      fullPath: '/user/'
+      preLoaderRoute: typeof protectedUserIndexRouteImport
+      parentRoute: typeof protectedRouteRoute
+    }
+    '/(protected)/user/$id': {
+      id: '/(protected)/user/$id'
+      path: '/user/$id'
+      fullPath: '/user/$id'
+      preLoaderRoute: typeof protectedUserIdRouteImport
+      parentRoute: typeof protectedRouteRoute
+    }
   }
 }
 
@@ -231,6 +269,8 @@ interface protectedRouteRouteChildren {
   protectedRoleRoute: typeof protectedRoleRoute
   protectedSettingsRoute: typeof protectedSettingsRoute
   protectedTasksRoute: typeof protectedTasksRoute
+  protectedUserIdRoute: typeof protectedUserIdRoute
+  protectedUserIndexRoute: typeof protectedUserIndexRoute
 }
 
 const protectedRouteRouteChildren: protectedRouteRouteChildren = {
@@ -242,6 +282,8 @@ const protectedRouteRouteChildren: protectedRouteRouteChildren = {
   protectedRoleRoute: protectedRoleRoute,
   protectedSettingsRoute: protectedSettingsRoute,
   protectedTasksRoute: protectedTasksRoute,
+  protectedUserIdRoute: protectedUserIdRoute,
+  protectedUserIndexRoute: protectedUserIndexRoute,
 }
 
 const protectedRouteRouteWithChildren = protectedRouteRoute._addFileChildren(
