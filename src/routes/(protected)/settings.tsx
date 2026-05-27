@@ -1,10 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-export const Route = createFileRoute('/(protected)/dashboard')({
+export const Route = createFileRoute('/(protected)/settings')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
-
-  return <h1>Dashboard</h1>
+  return <div>Hello "/(protected)/setting"!</div>
 }

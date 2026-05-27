@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as protectedRouteRouteImport } from './routes/(protected)/route'
+import { Route as protectedIndexRouteImport } from './routes/(protected)/index'
 import { Route as protectedTasksRouteImport } from './routes/(protected)/tasks'
 import { Route as protectedSettingsRouteImport } from './routes/(protected)/settings'
 import { Route as protectedRoleRouteImport } from './routes/(protected)/role'
@@ -28,6 +29,11 @@ const LoginRoute = LoginRouteImport.update({
 const protectedRouteRoute = protectedRouteRouteImport.update({
   id: '/(protected)',
   getParentRoute: () => rootRouteImport,
+} as any)
+const protectedIndexRoute = protectedIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => protectedRouteRoute,
 } as any)
 const protectedTasksRoute = protectedTasksRouteImport.update({
   id: '/tasks',
@@ -80,6 +86,7 @@ export interface FileRoutesByFullPath {
   '/role': typeof protectedRoleRoute
   '/settings': typeof protectedSettingsRoute
   '/tasks': typeof protectedTasksRoute
+  '/': typeof protectedIndexRoute
 }
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
@@ -91,6 +98,7 @@ export interface FileRoutesByTo {
   '/role': typeof protectedRoleRoute
   '/settings': typeof protectedSettingsRoute
   '/tasks': typeof protectedTasksRoute
+  '/': typeof protectedIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -104,6 +112,7 @@ export interface FileRoutesById {
   '/(protected)/role': typeof protectedRoleRoute
   '/(protected)/settings': typeof protectedSettingsRoute
   '/(protected)/tasks': typeof protectedTasksRoute
+  '/(protected)/': typeof protectedIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -117,6 +126,7 @@ export interface FileRouteTypes {
     | '/role'
     | '/settings'
     | '/tasks'
+    | '/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/login'
@@ -128,6 +138,7 @@ export interface FileRouteTypes {
     | '/role'
     | '/settings'
     | '/tasks'
+    | '/'
   id:
     | '__root__'
     | '/(protected)'
@@ -140,6 +151,7 @@ export interface FileRouteTypes {
     | '/(protected)/role'
     | '/(protected)/settings'
     | '/(protected)/tasks'
+    | '/(protected)/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -162,6 +174,13 @@ declare module '@tanstack/react-router' {
       fullPath: ''
       preLoaderRoute: typeof protectedRouteRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/(protected)/': {
+      id: '/(protected)/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof protectedIndexRouteImport
+      parentRoute: typeof protectedRouteRoute
     }
     '/(protected)/tasks': {
       id: '/(protected)/tasks'
@@ -231,6 +250,7 @@ interface protectedRouteRouteChildren {
   protectedRoleRoute: typeof protectedRoleRoute
   protectedSettingsRoute: typeof protectedSettingsRoute
   protectedTasksRoute: typeof protectedTasksRoute
+  protectedIndexRoute: typeof protectedIndexRoute
 }
 
 const protectedRouteRouteChildren: protectedRouteRouteChildren = {
@@ -242,6 +262,7 @@ const protectedRouteRouteChildren: protectedRouteRouteChildren = {
   protectedRoleRoute: protectedRoleRoute,
   protectedSettingsRoute: protectedSettingsRoute,
   protectedTasksRoute: protectedTasksRoute,
+  protectedIndexRoute: protectedIndexRoute,
 }
 
 const protectedRouteRouteWithChildren = protectedRouteRoute._addFileChildren(

@@ -1,5 +1,5 @@
 import { RouterProvider } from '@tanstack/react-router'
-import { useAuth } from './hooks/auth-context.tsx'
+import { useAuth } from './hooks/useAuth'
 import { router } from './router'
 
 function App() {
@@ -10,6 +10,7 @@ function App() {
       router={router}
       context={{
         auth: {
+          isLoading: auth.isLoading,
           isAuthenticated: auth.isAuthenticated,
         },
       }}

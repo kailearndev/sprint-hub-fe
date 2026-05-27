@@ -1,39 +1,54 @@
-// src/auth/auth-context.tsx
-import { createContext, useContext, useState } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
+import { useCallback } from 'react'
+import { getSprintHubAPI } from '../api/generated'
+import { AuthContext } from './auth'
+import { useMe } from './useMe'
 
-type User = {
-    id: string
-    name: string
-    email: string
-}
-
-export type AuthContextValue = {
-    user: User | null
-    isAuthenticated: boolean
-    login: (token: string, user: User) => void
-    logout: () => void
-}
-
-const AuthContext = createContext<AuthContextValue | null>(null)
-
+const { authControllerLogin, authControllerLogout, usersControllerMe } = getSprintHubAPI()
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-    const [user, setUser] = useState<User | null>(null)
 
-    const login = (token: string, user: User) => {
-        localStorage.setItem('token', token)
-        setUser(user)
+    const queryClient = useQueryClient()
+
+    const { data: userData, isLoading: isQueryLoading } = useMe()
+
+    const login = async (email: string, password: string) => {
+        try {
+            const res = await authControllerLogin({ email, password })
+
+            const user = await queryClient.fetchQuery({
+                queryKey: ['me'],
+                queryFn: usersControllerMe,
+            })
+
+            queryClient.setQueryData(['me'], user)
+
+            return res
+        } catch (error) {
+            throw error
+        }
     }
 
-    const logout = () => {
-        localStorage.removeItem('token')
-        setUser(null)
-    }
+    const logout = useCallback(async () => {
+        try {
+            await authControllerLogout()
+        } finally {
+            queryClient.setQueryData(['me'], null)
+
+            if (typeof window !== 'undefined') {
+                window.location.href = '/login'
+            }
+        }
+    }, [queryClient])
+
+    const isAuthenticated = !!userData
+    const isLoading = isQueryLoading
 
     return (
         <AuthContext.Provider
             value={{
-                user,
-                isAuthenticated: !!user,
+                user: userData || null,
+                isLoading,
+                isAuthenticated,
                 login,
                 logout,
             }}
@@ -41,14 +56,4 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             {children}
         </AuthContext.Provider>
     )
-}
-
-export function useAuth() {
-    const auth = useContext(AuthContext)
-
-    if (!auth) {
-        throw new Error('useAuth must be used inside AuthProvider')
-    }
-
-    return auth
 }

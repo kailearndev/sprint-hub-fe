@@ -3,6 +3,7 @@ import { routeTree } from './routeTree.gen'
 
 export interface RouterContext {
     auth: {
+        isLoading: boolean
         isAuthenticated: boolean
     }
 }
