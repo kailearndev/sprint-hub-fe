@@ -54,18 +54,18 @@ export interface UpdateUserDto {
 }
 
 export type AuditlogControllerFindAllParams = {
-  page?: number;
-  limit?: number;
-  /**
-   * Search keyword or email
-   */
-  search?: string;
-  sortBy?: string;
-  order?: AuditlogControllerFindAllOrder;
-  action?: AuditlogControllerFindAllAction;
-  entity?: string;
-  entityId?: string;
-  actorId?: string;
+page?: number;
+limit?: number;
+/**
+ * Search keyword or email
+ */
+search?: string;
+sortBy?: string;
+order?: AuditlogControllerFindAllOrder;
+action?: AuditlogControllerFindAllAction;
+entity?: string;
+entityId?: string;
+actorId?: string;
 };
 
 export type AuditlogControllerFindAllOrder = typeof AuditlogControllerFindAllOrder[keyof typeof AuditlogControllerFindAllOrder];
@@ -89,16 +89,16 @@ export const AuditlogControllerFindAllAction = {
 } as const;
 
 export type UsersControllerFindAllParams = {
-  page?: number;
-  limit?: number;
-  /**
-   * Search keyword or email
-   */
-  search?: string;
-  sortBy?: string;
-  order?: UsersControllerFindAllOrder;
-  role?: UsersControllerFindAllRole;
-  status?: UsersControllerFindAllStatus;
+page?: number;
+limit?: number;
+/**
+ * Search keyword or email
+ */
+search?: string;
+sortBy?: string;
+order?: UsersControllerFindAllOrder;
+role?: UsersControllerFindAllRole;
+status?: UsersControllerFindAllStatus;
 };
 
 export type UsersControllerFindAllOrder = typeof UsersControllerFindAllOrder[keyof typeof UsersControllerFindAllOrder];
@@ -127,149 +127,135 @@ export const UsersControllerFindAllStatus = {
 } as const;
 
 export const getSprintHubAPI = () => {
-  const appControllerGetHello = (
+const appControllerGetHello = (
 
-  ) => {
-    return customInstance<void>(
-      {
-        url: `/`, method: 'GET'
-      },
-    );
-  }
+ ) => {
+      return customInstance<void>(
+      {url: `/`, method: 'GET'
+    },
+      );
+    }
 
-  const authControllerRegister = (
+const authControllerRegister = (
     registerDto: RegisterDto,
-  ) => {
-    return customInstance<void>(
-      {
-        url: `/auth/register`, method: 'POST',
-        headers: { 'Content-Type': 'application/json', },
-        data: registerDto
-      },
-    );
-  }
+ ) => {
+      return customInstance<void>(
+      {url: `/auth/register`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: registerDto
+    },
+      );
+    }
 
-  const authControllerLogin = (
+const authControllerLogin = (
     loginDto: LoginDto,
-  ) => {
-    return customInstance<void>(
-      {
-        url: `/auth/login`, method: 'POST',
-        headers: { 'Content-Type': 'application/json', },
-        data: loginDto
-      },
-    );
-  }
+ ) => {
+      return customInstance<void>(
+      {url: `/auth/login`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: loginDto
+    },
+      );
+    }
 
-  const authControllerRefresh = (
+const authControllerRefresh = (
 
-  ) => {
-    return customInstance<void>(
-      {
-        url: `/auth/refresh`, method: 'POST'
-      },
-    );
-  }
+ ) => {
+      return customInstance<void>(
+      {url: `/auth/refresh`, method: 'POST'
+    },
+      );
+    }
 
-  const authControllerLogout = (
+const authControllerLogout = (
 
-  ) => {
-    return customInstance<void>(
-      {
-        url: `/auth/logout`, method: 'POST'
-      },
-    );
-  }
+ ) => {
+      return customInstance<void>(
+      {url: `/auth/logout`, method: 'POST'
+    },
+      );
+    }
 
-  const auditlogControllerFindAll = (
+const auditlogControllerFindAll = (
     params?: AuditlogControllerFindAllParams,
-  ) => {
-    return customInstance<void>(
-      {
-        url: `/audit-logs`, method: 'GET',
+ ) => {
+      return customInstance<void>(
+      {url: `/audit-logs`, method: 'GET',
         params
-      },
-    );
-  }
+    },
+      );
+    }
 
-  const auditlogControllerFindOne = (
+const auditlogControllerFindOne = (
     id: string,
-  ) => {
-    return customInstance<void>(
-      {
-        url: `/audit-logs/${id}`, method: 'GET'
-      },
-    );
-  }
+ ) => {
+      return customInstance<void>(
+      {url: `/audit-logs/${id}`, method: 'GET'
+    },
+      );
+    }
 
-  const usersControllerMe = (
+const usersControllerMe = (
 
-  ) => {
-    return customInstance<void>(
-      {
-        url: `/users/me`, method: 'GET'
-      },
-    );
-  }
+ ) => {
+      return customInstance<void>(
+      {url: `/users/me`, method: 'GET'
+    },
+      );
+    }
 
-  const usersControllerCreate = (
+const usersControllerCreate = (
     createUserDto: CreateUserDto,
-  ) => {
-    return customInstance<void>(
-      {
-        url: `/users`, method: 'POST',
-        headers: { 'Content-Type': 'application/json', },
-        data: createUserDto
-      },
-    );
-  }
+ ) => {
+      return customInstance<void>(
+      {url: `/users`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: createUserDto
+    },
+      );
+    }
 
-  const usersControllerFindAll = (
+const usersControllerFindAll = (
     params?: UsersControllerFindAllParams,
-  ) => {
-    return customInstance<void>(
-      {
-        url: `/users`, method: 'GET',
+ ) => {
+      return customInstance<void>(
+      {url: `/users`, method: 'GET',
         params
-      },
-    );
-  }
+    },
+      );
+    }
 
-  const usersControllerFindOne = (
+const usersControllerFindOne = (
     id: string,
-  ) => {
-    return customInstance<void>(
-      {
-        url: `/users/${id}`, method: 'GET'
-      },
-    );
-  }
+ ) => {
+      return customInstance<void>(
+      {url: `/users/${id}`, method: 'GET'
+    },
+      );
+    }
 
-  const usersControllerUpdate = (
+const usersControllerUpdate = (
     id: string,
     updateUserDto: UpdateUserDto,
-  ) => {
-    return customInstance<void>(
-      {
-        url: `/users/${id}`, method: 'PATCH',
-        headers: { 'Content-Type': 'application/json', },
-        data: updateUserDto
-      },
-    );
-  }
+ ) => {
+      return customInstance<void>(
+      {url: `/users/${id}`, method: 'PATCH',
+      headers: {'Content-Type': 'application/json', },
+      data: updateUserDto
+    },
+      );
+    }
 
-  const usersControllerRemove = (
+const usersControllerRemove = (
     id: string,
-  ) => {
-    return customInstance<void>(
-      {
-        url: `/users/${id}`, method: 'DELETE'
-      },
-    );
-  }
+ ) => {
+      return customInstance<void>(
+      {url: `/users/${id}`, method: 'DELETE'
+    },
+      );
+    }
 
-  return { appControllerGetHello, authControllerRegister, authControllerLogin, authControllerRefresh, authControllerLogout, auditlogControllerFindAll, auditlogControllerFindOne, usersControllerMe, usersControllerCreate, usersControllerFindAll, usersControllerFindOne, usersControllerUpdate, usersControllerRemove }
-};
+return {appControllerGetHello,authControllerRegister,authControllerLogin,authControllerRefresh,authControllerLogout,auditlogControllerFindAll,auditlogControllerFindOne,usersControllerMe,usersControllerCreate,usersControllerFindAll,usersControllerFindOne,usersControllerUpdate,usersControllerRemove}};
 export type AppControllerGetHelloResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getSprintHubAPI>['appControllerGetHello']>>>
 export type AuthControllerRegisterResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getSprintHubAPI>['authControllerRegister']>>>
 export type AuthControllerLoginResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getSprintHubAPI>['authControllerLogin']>>>

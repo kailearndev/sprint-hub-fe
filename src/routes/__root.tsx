@@ -2,9 +2,17 @@ import { createRootRouteWithContext, Outlet } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 import { Toaster } from 'sonner'
 import NotFound from '../components/layouts/NotFound'
-import type { RouterContext } from '../router'
+import type { IUserResponse } from '@/types/user.type';
 
-export const Route = createRootRouteWithContext<RouterContext>()({
+interface MyRouterContext {
+    auth: {
+        isAuthenticated: boolean;
+        user: IUserResponse | null;
+        isLoading: boolean;
+    };
+}
+
+export const Route = createRootRouteWithContext<MyRouterContext>()({
     notFoundComponent: () => <NotFound />,
 
     component: Root,

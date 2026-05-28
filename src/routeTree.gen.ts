@@ -9,126 +9,132 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as LoginRouteImport } from './routes/login'
-import { Route as protectedRouteRouteImport } from './routes/(protected)/route'
-import { Route as protectedTasksRouteImport } from './routes/(protected)/tasks'
-import { Route as protectedSettingsRouteImport } from './routes/(protected)/settings'
-import { Route as protectedRoleRouteImport } from './routes/(protected)/role'
-import { Route as protectedReportRouteImport } from './routes/(protected)/report'
-import { Route as protectedKanbanRouteImport } from './routes/(protected)/kanban'
-import { Route as protectedHelpRouteImport } from './routes/(protected)/help'
-import { Route as protectedDashboardRouteImport } from './routes/(protected)/dashboard'
-import { Route as protectedCalendarRouteImport } from './routes/(protected)/calendar'
-import { Route as protectedUserIndexRouteImport } from './routes/(protected)/user/index'
-import { Route as protectedUserIdRouteImport } from './routes/(protected)/user/$id'
+import { Route as ProtectedRouteRouteImport } from './routes/_protected/route'
+import { Route as GuestRouteRouteImport } from './routes/_guest/route'
+import { Route as ProtectedIndexRouteImport } from './routes/_protected/index'
+import { Route as ProtectedTasksRouteImport } from './routes/_protected/tasks'
+import { Route as ProtectedSettingsRouteImport } from './routes/_protected/settings'
+import { Route as ProtectedRoleRouteImport } from './routes/_protected/role'
+import { Route as ProtectedReportRouteImport } from './routes/_protected/report'
+import { Route as ProtectedKanbanRouteImport } from './routes/_protected/kanban'
+import { Route as ProtectedHelpRouteImport } from './routes/_protected/help'
+import { Route as ProtectedCalendarRouteImport } from './routes/_protected/calendar'
+import { Route as GuestLoginRouteImport } from './routes/_guest/login'
+import { Route as ProtectedUserIndexRouteImport } from './routes/_protected/user/index'
+import { Route as ProtectedUserIdRouteImport } from './routes/_protected/user/$id'
 
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
+const ProtectedRouteRoute = ProtectedRouteRouteImport.update({
+  id: '/_protected',
   getParentRoute: () => rootRouteImport,
 } as any)
-const protectedRouteRoute = protectedRouteRouteImport.update({
-  id: '/(protected)',
+const GuestRouteRoute = GuestRouteRouteImport.update({
+  id: '/_guest',
   getParentRoute: () => rootRouteImport,
 } as any)
-const protectedTasksRoute = protectedTasksRouteImport.update({
+const ProtectedIndexRoute = ProtectedIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ProtectedRouteRoute,
+} as any)
+const ProtectedTasksRoute = ProtectedTasksRouteImport.update({
   id: '/tasks',
   path: '/tasks',
-  getParentRoute: () => protectedRouteRoute,
+  getParentRoute: () => ProtectedRouteRoute,
 } as any)
-const protectedSettingsRoute = protectedSettingsRouteImport.update({
+const ProtectedSettingsRoute = ProtectedSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
-  getParentRoute: () => protectedRouteRoute,
+  getParentRoute: () => ProtectedRouteRoute,
 } as any)
-const protectedRoleRoute = protectedRoleRouteImport.update({
+const ProtectedRoleRoute = ProtectedRoleRouteImport.update({
   id: '/role',
   path: '/role',
-  getParentRoute: () => protectedRouteRoute,
+  getParentRoute: () => ProtectedRouteRoute,
 } as any)
-const protectedReportRoute = protectedReportRouteImport.update({
+const ProtectedReportRoute = ProtectedReportRouteImport.update({
   id: '/report',
   path: '/report',
-  getParentRoute: () => protectedRouteRoute,
+  getParentRoute: () => ProtectedRouteRoute,
 } as any)
-const protectedKanbanRoute = protectedKanbanRouteImport.update({
+const ProtectedKanbanRoute = ProtectedKanbanRouteImport.update({
   id: '/kanban',
   path: '/kanban',
-  getParentRoute: () => protectedRouteRoute,
+  getParentRoute: () => ProtectedRouteRoute,
 } as any)
-const protectedHelpRoute = protectedHelpRouteImport.update({
+const ProtectedHelpRoute = ProtectedHelpRouteImport.update({
   id: '/help',
   path: '/help',
-  getParentRoute: () => protectedRouteRoute,
+  getParentRoute: () => ProtectedRouteRoute,
 } as any)
-const protectedDashboardRoute = protectedDashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => protectedRouteRoute,
-} as any)
-const protectedCalendarRoute = protectedCalendarRouteImport.update({
+const ProtectedCalendarRoute = ProtectedCalendarRouteImport.update({
   id: '/calendar',
   path: '/calendar',
-  getParentRoute: () => protectedRouteRoute,
+  getParentRoute: () => ProtectedRouteRoute,
 } as any)
-const protectedUserIndexRoute = protectedUserIndexRouteImport.update({
+const GuestLoginRoute = GuestLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => GuestRouteRoute,
+} as any)
+const ProtectedUserIndexRoute = ProtectedUserIndexRouteImport.update({
   id: '/user/',
   path: '/user/',
-  getParentRoute: () => protectedRouteRoute,
+  getParentRoute: () => ProtectedRouteRoute,
 } as any)
-const protectedUserIdRoute = protectedUserIdRouteImport.update({
+const ProtectedUserIdRoute = ProtectedUserIdRouteImport.update({
   id: '/user/$id',
   path: '/user/$id',
-  getParentRoute: () => protectedRouteRoute,
+  getParentRoute: () => ProtectedRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/login': typeof LoginRoute
-  '/calendar': typeof protectedCalendarRoute
-  '/dashboard': typeof protectedDashboardRoute
-  '/help': typeof protectedHelpRoute
-  '/kanban': typeof protectedKanbanRoute
-  '/report': typeof protectedReportRoute
-  '/role': typeof protectedRoleRoute
-  '/settings': typeof protectedSettingsRoute
-  '/tasks': typeof protectedTasksRoute
-  '/user/$id': typeof protectedUserIdRoute
-  '/user/': typeof protectedUserIndexRoute
+  '/': typeof ProtectedIndexRoute
+  '/login': typeof GuestLoginRoute
+  '/calendar': typeof ProtectedCalendarRoute
+  '/help': typeof ProtectedHelpRoute
+  '/kanban': typeof ProtectedKanbanRoute
+  '/report': typeof ProtectedReportRoute
+  '/role': typeof ProtectedRoleRoute
+  '/settings': typeof ProtectedSettingsRoute
+  '/tasks': typeof ProtectedTasksRoute
+  '/user/$id': typeof ProtectedUserIdRoute
+  '/user/': typeof ProtectedUserIndexRoute
 }
 export interface FileRoutesByTo {
-  '/login': typeof LoginRoute
-  '/calendar': typeof protectedCalendarRoute
-  '/dashboard': typeof protectedDashboardRoute
-  '/help': typeof protectedHelpRoute
-  '/kanban': typeof protectedKanbanRoute
-  '/report': typeof protectedReportRoute
-  '/role': typeof protectedRoleRoute
-  '/settings': typeof protectedSettingsRoute
-  '/tasks': typeof protectedTasksRoute
-  '/user/$id': typeof protectedUserIdRoute
-  '/user': typeof protectedUserIndexRoute
+  '/': typeof ProtectedIndexRoute
+  '/login': typeof GuestLoginRoute
+  '/calendar': typeof ProtectedCalendarRoute
+  '/help': typeof ProtectedHelpRoute
+  '/kanban': typeof ProtectedKanbanRoute
+  '/report': typeof ProtectedReportRoute
+  '/role': typeof ProtectedRoleRoute
+  '/settings': typeof ProtectedSettingsRoute
+  '/tasks': typeof ProtectedTasksRoute
+  '/user/$id': typeof ProtectedUserIdRoute
+  '/user': typeof ProtectedUserIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/(protected)': typeof protectedRouteRouteWithChildren
-  '/login': typeof LoginRoute
-  '/(protected)/calendar': typeof protectedCalendarRoute
-  '/(protected)/dashboard': typeof protectedDashboardRoute
-  '/(protected)/help': typeof protectedHelpRoute
-  '/(protected)/kanban': typeof protectedKanbanRoute
-  '/(protected)/report': typeof protectedReportRoute
-  '/(protected)/role': typeof protectedRoleRoute
-  '/(protected)/settings': typeof protectedSettingsRoute
-  '/(protected)/tasks': typeof protectedTasksRoute
-  '/(protected)/user/$id': typeof protectedUserIdRoute
-  '/(protected)/user/': typeof protectedUserIndexRoute
+  '/_guest': typeof GuestRouteRouteWithChildren
+  '/_protected': typeof ProtectedRouteRouteWithChildren
+  '/_guest/login': typeof GuestLoginRoute
+  '/_protected/calendar': typeof ProtectedCalendarRoute
+  '/_protected/help': typeof ProtectedHelpRoute
+  '/_protected/kanban': typeof ProtectedKanbanRoute
+  '/_protected/report': typeof ProtectedReportRoute
+  '/_protected/role': typeof ProtectedRoleRoute
+  '/_protected/settings': typeof ProtectedSettingsRoute
+  '/_protected/tasks': typeof ProtectedTasksRoute
+  '/_protected/': typeof ProtectedIndexRoute
+  '/_protected/user/$id': typeof ProtectedUserIdRoute
+  '/_protected/user/': typeof ProtectedUserIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/'
     | '/login'
     | '/calendar'
-    | '/dashboard'
     | '/help'
     | '/kanban'
     | '/report'
@@ -139,9 +145,9 @@ export interface FileRouteTypes {
     | '/user/'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/'
     | '/login'
     | '/calendar'
-    | '/dashboard'
     | '/help'
     | '/kanban'
     | '/report'
@@ -152,147 +158,167 @@ export interface FileRouteTypes {
     | '/user'
   id:
     | '__root__'
-    | '/(protected)'
-    | '/login'
-    | '/(protected)/calendar'
-    | '/(protected)/dashboard'
-    | '/(protected)/help'
-    | '/(protected)/kanban'
-    | '/(protected)/report'
-    | '/(protected)/role'
-    | '/(protected)/settings'
-    | '/(protected)/tasks'
-    | '/(protected)/user/$id'
-    | '/(protected)/user/'
+    | '/_guest'
+    | '/_protected'
+    | '/_guest/login'
+    | '/_protected/calendar'
+    | '/_protected/help'
+    | '/_protected/kanban'
+    | '/_protected/report'
+    | '/_protected/role'
+    | '/_protected/settings'
+    | '/_protected/tasks'
+    | '/_protected/'
+    | '/_protected/user/$id'
+    | '/_protected/user/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  protectedRouteRoute: typeof protectedRouteRouteWithChildren
-  LoginRoute: typeof LoginRoute
+  GuestRouteRoute: typeof GuestRouteRouteWithChildren
+  ProtectedRouteRoute: typeof ProtectedRouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/(protected)': {
-      id: '/(protected)'
+    '/_protected': {
+      id: '/_protected'
       path: ''
-      fullPath: ''
-      preLoaderRoute: typeof protectedRouteRouteImport
+      fullPath: '/'
+      preLoaderRoute: typeof ProtectedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/(protected)/tasks': {
-      id: '/(protected)/tasks'
+    '/_guest': {
+      id: '/_guest'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof GuestRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_protected/': {
+      id: '/_protected/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof ProtectedIndexRouteImport
+      parentRoute: typeof ProtectedRouteRoute
+    }
+    '/_protected/tasks': {
+      id: '/_protected/tasks'
       path: '/tasks'
       fullPath: '/tasks'
-      preLoaderRoute: typeof protectedTasksRouteImport
-      parentRoute: typeof protectedRouteRoute
+      preLoaderRoute: typeof ProtectedTasksRouteImport
+      parentRoute: typeof ProtectedRouteRoute
     }
-    '/(protected)/settings': {
-      id: '/(protected)/settings'
+    '/_protected/settings': {
+      id: '/_protected/settings'
       path: '/settings'
       fullPath: '/settings'
-      preLoaderRoute: typeof protectedSettingsRouteImport
-      parentRoute: typeof protectedRouteRoute
+      preLoaderRoute: typeof ProtectedSettingsRouteImport
+      parentRoute: typeof ProtectedRouteRoute
     }
-    '/(protected)/role': {
-      id: '/(protected)/role'
+    '/_protected/role': {
+      id: '/_protected/role'
       path: '/role'
       fullPath: '/role'
-      preLoaderRoute: typeof protectedRoleRouteImport
-      parentRoute: typeof protectedRouteRoute
+      preLoaderRoute: typeof ProtectedRoleRouteImport
+      parentRoute: typeof ProtectedRouteRoute
     }
-    '/(protected)/report': {
-      id: '/(protected)/report'
+    '/_protected/report': {
+      id: '/_protected/report'
       path: '/report'
       fullPath: '/report'
-      preLoaderRoute: typeof protectedReportRouteImport
-      parentRoute: typeof protectedRouteRoute
+      preLoaderRoute: typeof ProtectedReportRouteImport
+      parentRoute: typeof ProtectedRouteRoute
     }
-    '/(protected)/kanban': {
-      id: '/(protected)/kanban'
+    '/_protected/kanban': {
+      id: '/_protected/kanban'
       path: '/kanban'
       fullPath: '/kanban'
-      preLoaderRoute: typeof protectedKanbanRouteImport
-      parentRoute: typeof protectedRouteRoute
+      preLoaderRoute: typeof ProtectedKanbanRouteImport
+      parentRoute: typeof ProtectedRouteRoute
     }
-    '/(protected)/help': {
-      id: '/(protected)/help'
+    '/_protected/help': {
+      id: '/_protected/help'
       path: '/help'
       fullPath: '/help'
-      preLoaderRoute: typeof protectedHelpRouteImport
-      parentRoute: typeof protectedRouteRoute
+      preLoaderRoute: typeof ProtectedHelpRouteImport
+      parentRoute: typeof ProtectedRouteRoute
     }
-    '/(protected)/dashboard': {
-      id: '/(protected)/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof protectedDashboardRouteImport
-      parentRoute: typeof protectedRouteRoute
-    }
-    '/(protected)/calendar': {
-      id: '/(protected)/calendar'
+    '/_protected/calendar': {
+      id: '/_protected/calendar'
       path: '/calendar'
       fullPath: '/calendar'
-      preLoaderRoute: typeof protectedCalendarRouteImport
-      parentRoute: typeof protectedRouteRoute
+      preLoaderRoute: typeof ProtectedCalendarRouteImport
+      parentRoute: typeof ProtectedRouteRoute
     }
-    '/(protected)/user/': {
-      id: '/(protected)/user/'
+    '/_guest/login': {
+      id: '/_guest/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof GuestLoginRouteImport
+      parentRoute: typeof GuestRouteRoute
+    }
+    '/_protected/user/': {
+      id: '/_protected/user/'
       path: '/user'
       fullPath: '/user/'
-      preLoaderRoute: typeof protectedUserIndexRouteImport
-      parentRoute: typeof protectedRouteRoute
+      preLoaderRoute: typeof ProtectedUserIndexRouteImport
+      parentRoute: typeof ProtectedRouteRoute
     }
-    '/(protected)/user/$id': {
-      id: '/(protected)/user/$id'
+    '/_protected/user/$id': {
+      id: '/_protected/user/$id'
       path: '/user/$id'
       fullPath: '/user/$id'
-      preLoaderRoute: typeof protectedUserIdRouteImport
-      parentRoute: typeof protectedRouteRoute
+      preLoaderRoute: typeof ProtectedUserIdRouteImport
+      parentRoute: typeof ProtectedRouteRoute
     }
   }
 }
 
-interface protectedRouteRouteChildren {
-  protectedCalendarRoute: typeof protectedCalendarRoute
-  protectedDashboardRoute: typeof protectedDashboardRoute
-  protectedHelpRoute: typeof protectedHelpRoute
-  protectedKanbanRoute: typeof protectedKanbanRoute
-  protectedReportRoute: typeof protectedReportRoute
-  protectedRoleRoute: typeof protectedRoleRoute
-  protectedSettingsRoute: typeof protectedSettingsRoute
-  protectedTasksRoute: typeof protectedTasksRoute
-  protectedUserIdRoute: typeof protectedUserIdRoute
-  protectedUserIndexRoute: typeof protectedUserIndexRoute
+interface GuestRouteRouteChildren {
+  GuestLoginRoute: typeof GuestLoginRoute
 }
 
-const protectedRouteRouteChildren: protectedRouteRouteChildren = {
-  protectedCalendarRoute: protectedCalendarRoute,
-  protectedDashboardRoute: protectedDashboardRoute,
-  protectedHelpRoute: protectedHelpRoute,
-  protectedKanbanRoute: protectedKanbanRoute,
-  protectedReportRoute: protectedReportRoute,
-  protectedRoleRoute: protectedRoleRoute,
-  protectedSettingsRoute: protectedSettingsRoute,
-  protectedTasksRoute: protectedTasksRoute,
-  protectedUserIdRoute: protectedUserIdRoute,
-  protectedUserIndexRoute: protectedUserIndexRoute,
+const GuestRouteRouteChildren: GuestRouteRouteChildren = {
+  GuestLoginRoute: GuestLoginRoute,
 }
 
-const protectedRouteRouteWithChildren = protectedRouteRoute._addFileChildren(
-  protectedRouteRouteChildren,
+const GuestRouteRouteWithChildren = GuestRouteRoute._addFileChildren(
+  GuestRouteRouteChildren,
+)
+
+interface ProtectedRouteRouteChildren {
+  ProtectedCalendarRoute: typeof ProtectedCalendarRoute
+  ProtectedHelpRoute: typeof ProtectedHelpRoute
+  ProtectedKanbanRoute: typeof ProtectedKanbanRoute
+  ProtectedReportRoute: typeof ProtectedReportRoute
+  ProtectedRoleRoute: typeof ProtectedRoleRoute
+  ProtectedSettingsRoute: typeof ProtectedSettingsRoute
+  ProtectedTasksRoute: typeof ProtectedTasksRoute
+  ProtectedIndexRoute: typeof ProtectedIndexRoute
+  ProtectedUserIdRoute: typeof ProtectedUserIdRoute
+  ProtectedUserIndexRoute: typeof ProtectedUserIndexRoute
+}
+
+const ProtectedRouteRouteChildren: ProtectedRouteRouteChildren = {
+  ProtectedCalendarRoute: ProtectedCalendarRoute,
+  ProtectedHelpRoute: ProtectedHelpRoute,
+  ProtectedKanbanRoute: ProtectedKanbanRoute,
+  ProtectedReportRoute: ProtectedReportRoute,
+  ProtectedRoleRoute: ProtectedRoleRoute,
+  ProtectedSettingsRoute: ProtectedSettingsRoute,
+  ProtectedTasksRoute: ProtectedTasksRoute,
+  ProtectedIndexRoute: ProtectedIndexRoute,
+  ProtectedUserIdRoute: ProtectedUserIdRoute,
+  ProtectedUserIndexRoute: ProtectedUserIndexRoute,
+}
+
+const ProtectedRouteRouteWithChildren = ProtectedRouteRoute._addFileChildren(
+  ProtectedRouteRouteChildren,
 )
 
 const rootRouteChildren: RootRouteChildren = {
-  protectedRouteRoute: protectedRouteRouteWithChildren,
-  LoginRoute: LoginRoute,
+  GuestRouteRoute: GuestRouteRouteWithChildren,
+  ProtectedRouteRoute: ProtectedRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

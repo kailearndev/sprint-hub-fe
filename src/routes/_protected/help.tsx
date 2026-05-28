@@ -1,9 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-export const Route = createFileRoute('/(protected)/kanban')({
+export const Route = createFileRoute('/_protected/help')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
-  return <div>Hello "/(protected)/kanban"!</div>
+  return <div>Hello "/(protected)/help"!</div>
 }

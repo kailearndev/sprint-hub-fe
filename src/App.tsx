@@ -1,21 +1,22 @@
-import { RouterProvider } from '@tanstack/react-router'
-import { useAuth } from './hooks/useAuth'
-import { router } from './router'
+// App.tsx
+import { RouterProvider } from '@tanstack/react-router';
+import { router } from './router';
+import { useAuthStore } from './store/useAuthStore';
+import { useEffect } from 'react';
 
 function App() {
-  const auth = useAuth()
+  // Lấy trạng thái từ Zustand để biết khi nào user bấm login/logout thành công
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
+  // Đồng bộ Router: Mỗi khi trạng thái Auth đổi, ép Router check lại quyền
+  useEffect(() => {
+    router.invalidate();
+  }, [isAuthenticated]);
+
+  // RENDER THẲNG LUÔN, không bọc loading nhấp nháy gì ở đây nữa cả!
   return (
-    <RouterProvider
-      router={router}
-      context={{
-        auth: {
-          isLoading: auth.isLoading,
-          isAuthenticated: auth.isAuthenticated,
-        },
-      }}
-    />
-  )
+    <RouterProvider router={router} />
+  );
 }
 
-export default App
+export default App;

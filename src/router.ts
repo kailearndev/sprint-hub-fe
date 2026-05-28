@@ -10,7 +10,13 @@ export interface RouterContext {
 
 export const router = createRouter({
     routeTree,
-    context: {} as RouterContext,
+    context: {
+        auth: {
+            isLoading: false,
+            isAuthenticated: false,
+            user: null,
+        },
+    }
 })
 
 declare module '@tanstack/react-router' {

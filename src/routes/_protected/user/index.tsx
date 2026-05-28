@@ -1,9 +1,10 @@
+import User from '@/pages/User'
 import { createFileRoute } from '@tanstack/react-router'
 
-export const Route = createFileRoute('/(protected)/user/$id')({
+export const Route = createFileRoute('/_protected/user/')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
-  return <div>Hello "/(protected)/user/$id"!</div>
+  return <User />
 }

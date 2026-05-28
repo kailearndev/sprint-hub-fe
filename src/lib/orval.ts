@@ -4,7 +4,6 @@ import { api } from '../services/api'
 export const customInstance = async <T>(
     config: AxiosRequestConfig,
 ): Promise<T> => {
-    const response = await api.request<T>(config)
-
-    return response.data
+    const { data } = await api.request<T>(config)
+    return data
 }

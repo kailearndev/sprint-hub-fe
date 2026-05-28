@@ -1,3 +1,4 @@
+import { getSprintHubAPI } from "@/api/generated"
 import { Button } from "@/components/ui/button"
 import {
     Field,
@@ -6,7 +7,6 @@ import {
     FieldLabel
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import { useAuth } from "@/hooks/useAuth"
 import { getApiErrorMessage } from "@/lib/get-api-error-message"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useNavigate } from "@tanstack/react-router"
@@ -25,8 +25,7 @@ const formSchema = z.object({
 })
 export default function LoginForm() {
     const navigate = useNavigate()
-    const { login } = useAuth()
-
+    const { authControllerLogin } = getSprintHubAPI()
     const [isShowingPassword, setIsShowingPassword] = useState(false)
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -40,9 +39,9 @@ export default function LoginForm() {
 
     const onSubmit = async (data: z.infer<typeof formSchema>) => {
         try {
-            await login(data.email, data.password)
+            await authControllerLogin(data)
             toast.success('Login successful')
-            navigate({ to: '/dashboard' })
+            navigate({ to: '/' })
         } catch (error) {
             toast.error(getApiErrorMessage(error))
         }

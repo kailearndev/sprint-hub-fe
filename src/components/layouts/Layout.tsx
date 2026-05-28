@@ -2,13 +2,14 @@ import { Link, useMatchRoute } from "@tanstack/react-router"
 import { Banana, BarChart2, Calendar, LayoutGrid, Logs, SquareKanban, User } from "lucide-react"
 import NavUser from "./NavUser"
 import { cn } from "@/lib/utils"
-import { useAuth } from "@/hooks/useAuth"
 import type { MenuItem, Role } from "@/types/sidebar.config"
+import { useAuthStore } from "@/store/useAuthStore"
+import { Search } from "./Search"
 
 const menuItems: MenuItem[] = [
     {
-        name: 'Dashboard',
-        href: '/dashboard',
+        name: 'Home',
+        href: '/',
         id: 1,
         icon: <LayoutGrid className="md:size-5 size-4" />,
         role: ['SUPER_ADMIN', 'USER'],
@@ -50,8 +51,7 @@ const menuItems: MenuItem[] = [
     },
 ] as const
 export default function Layout({ children }: { children: React.ReactNode }) {
-    const { user } = useAuth()
-
+    const { user } = useAuthStore()
 
     const matchRoute = useMatchRoute()
 
@@ -63,7 +63,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     }
 
     const visibleMenuItems = menuItems.filter((item) =>
-        item.role.includes(user?.data.role as Role),
+        item.role.includes(user?.role as Role),
     )
 
 
@@ -123,7 +123,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 </div>
                 <NavUser isActive={isActive} />
             </nav>
-            <main className="min-w-0 flex-1 p-4 pb-24 md:pb-4">
+            <main className="min-w-0 flex-1 p-4 pb-24 md:pb-4 bg-white flex flex-col gap-4 rounded-lg shadow">
+                <Search value="" onChange={() => { }} />
                 {children}
             </main>
         </div>

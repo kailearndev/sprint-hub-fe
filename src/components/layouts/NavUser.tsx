@@ -1,8 +1,10 @@
+import { getSprintHubAPI } from '@/api/generated'
 import { cn } from "@/lib/utils"
+import { useAuthStore } from "@/store/useAuthStore"
 import { Link } from "@tanstack/react-router"
 import { DoorOpen, HelpCircle, Settings } from "lucide-react"
+import { toast } from "sonner"
 import { Button } from "../ui/button"
-import { useAuth } from "@/hooks/useAuth"
 
 const sidebarLinks = [
     {
@@ -18,9 +20,30 @@ const sidebarLinks = [
 
 
 ]
+const { authControllerLogout } = getSprintHubAPI()
+
 
 export default function NavUser({ isActive }: { isActive: (href: string) => boolean }) {
-    const { logout } = useAuth()
+    const clearAuth = useAuthStore((state) => state.clearAuth)
+    const logout = async () => {
+        try {
+            const response: any =
+                await authControllerLogout()
+            if (response.statusCode === 200) {
+                clearAuth()
+
+                toast.success('Logout successful')
+            }
+
+
+        } catch (error) {
+            toast.error(error as string || "Logout failed")
+            console.error('Logout failed:', error)
+        }
+        finally {
+            clearAuth() // Dù logout thành công hay thất bại thì cũng xóa sạch sẽ auth state, tránh trường hợp dính lỗi cũ rồi vẫn để user ở trạng thái "đã đăng nhập" trong
+        }
+    }
     return (
         <div className="hidden md:flex gap-2  border-t flex-col border-gray-300 border-dashed pt-4">
             {sidebarLinks.map((item) => (
