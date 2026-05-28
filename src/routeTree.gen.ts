@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ProtectedRouteRouteImport } from './routes/_protected/route'
 import { Route as GuestRouteRouteImport } from './routes/_guest/route'
 import { Route as ProtectedIndexRouteImport } from './routes/_protected/index'
+import { Route as ProtectedUnauthoredRouteImport } from './routes/_protected/unauthored'
 import { Route as ProtectedTasksRouteImport } from './routes/_protected/tasks'
 import { Route as ProtectedSettingsRouteImport } from './routes/_protected/settings'
 import { Route as ProtectedRoleRouteImport } from './routes/_protected/role'
@@ -34,6 +35,11 @@ const GuestRouteRoute = GuestRouteRouteImport.update({
 const ProtectedIndexRoute = ProtectedIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => ProtectedRouteRoute,
+} as any)
+const ProtectedUnauthoredRoute = ProtectedUnauthoredRouteImport.update({
+  id: '/unauthored',
+  path: '/unauthored',
   getParentRoute: () => ProtectedRouteRoute,
 } as any)
 const ProtectedTasksRoute = ProtectedTasksRouteImport.update({
@@ -97,6 +103,7 @@ export interface FileRoutesByFullPath {
   '/role': typeof ProtectedRoleRoute
   '/settings': typeof ProtectedSettingsRoute
   '/tasks': typeof ProtectedTasksRoute
+  '/unauthored': typeof ProtectedUnauthoredRoute
   '/user/$id': typeof ProtectedUserIdRoute
   '/user/': typeof ProtectedUserIndexRoute
 }
@@ -110,6 +117,7 @@ export interface FileRoutesByTo {
   '/role': typeof ProtectedRoleRoute
   '/settings': typeof ProtectedSettingsRoute
   '/tasks': typeof ProtectedTasksRoute
+  '/unauthored': typeof ProtectedUnauthoredRoute
   '/user/$id': typeof ProtectedUserIdRoute
   '/user': typeof ProtectedUserIndexRoute
 }
@@ -125,6 +133,7 @@ export interface FileRoutesById {
   '/_protected/role': typeof ProtectedRoleRoute
   '/_protected/settings': typeof ProtectedSettingsRoute
   '/_protected/tasks': typeof ProtectedTasksRoute
+  '/_protected/unauthored': typeof ProtectedUnauthoredRoute
   '/_protected/': typeof ProtectedIndexRoute
   '/_protected/user/$id': typeof ProtectedUserIdRoute
   '/_protected/user/': typeof ProtectedUserIndexRoute
@@ -141,6 +150,7 @@ export interface FileRouteTypes {
     | '/role'
     | '/settings'
     | '/tasks'
+    | '/unauthored'
     | '/user/$id'
     | '/user/'
   fileRoutesByTo: FileRoutesByTo
@@ -154,6 +164,7 @@ export interface FileRouteTypes {
     | '/role'
     | '/settings'
     | '/tasks'
+    | '/unauthored'
     | '/user/$id'
     | '/user'
   id:
@@ -168,6 +179,7 @@ export interface FileRouteTypes {
     | '/_protected/role'
     | '/_protected/settings'
     | '/_protected/tasks'
+    | '/_protected/unauthored'
     | '/_protected/'
     | '/_protected/user/$id'
     | '/_protected/user/'
@@ -199,6 +211,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof ProtectedIndexRouteImport
+      parentRoute: typeof ProtectedRouteRoute
+    }
+    '/_protected/unauthored': {
+      id: '/_protected/unauthored'
+      path: '/unauthored'
+      fullPath: '/unauthored'
+      preLoaderRoute: typeof ProtectedUnauthoredRouteImport
       parentRoute: typeof ProtectedRouteRoute
     }
     '/_protected/tasks': {
@@ -294,6 +313,7 @@ interface ProtectedRouteRouteChildren {
   ProtectedRoleRoute: typeof ProtectedRoleRoute
   ProtectedSettingsRoute: typeof ProtectedSettingsRoute
   ProtectedTasksRoute: typeof ProtectedTasksRoute
+  ProtectedUnauthoredRoute: typeof ProtectedUnauthoredRoute
   ProtectedIndexRoute: typeof ProtectedIndexRoute
   ProtectedUserIdRoute: typeof ProtectedUserIdRoute
   ProtectedUserIndexRoute: typeof ProtectedUserIndexRoute
@@ -307,6 +327,7 @@ const ProtectedRouteRouteChildren: ProtectedRouteRouteChildren = {
   ProtectedRoleRoute: ProtectedRoleRoute,
   ProtectedSettingsRoute: ProtectedSettingsRoute,
   ProtectedTasksRoute: ProtectedTasksRoute,
+  ProtectedUnauthoredRoute: ProtectedUnauthoredRoute,
   ProtectedIndexRoute: ProtectedIndexRoute,
   ProtectedUserIdRoute: ProtectedUserIdRoute,
   ProtectedUserIndexRoute: ProtectedUserIndexRoute,
