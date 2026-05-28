@@ -13,8 +13,9 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"// This type is used to define the shape of our data.
+} from "@/components/ui/dropdown-menu"; // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 import { Checkbox } from "@/components/ui/checkbox"
 import { toast } from "sonner"
@@ -49,6 +50,21 @@ export const columns = ({ onViewUser }: UserColumnsOptions): ColumnDef<IUserList
     {
         accessorKey: "name",
         header: "Name",
+        cell: ({ row }) => {
+            const { name, avatarUrl } = row.original
+
+            return (
+                <div className="flex items-center gap-2">
+                    <Avatar>
+                        <AvatarImage src={avatarUrl || "https://github.com/shadcn.png"} />
+                        <AvatarFallback>
+                            {name.charAt(0)}
+                        </AvatarFallback>
+                    </Avatar>
+                    <span>{name}</span>
+                </div>
+            )
+        }
     },
 
     {
