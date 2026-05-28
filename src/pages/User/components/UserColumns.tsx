@@ -22,9 +22,10 @@ import { toast } from "sonner"
 
 type UserColumnsOptions = {
     onViewUser: (userId: string) => void
+    onBanUser: (userId: string) => void
 }
 
-export const columns = ({ onViewUser }: UserColumnsOptions): ColumnDef<IUserListResponse>[] => [
+export const columns = ({ onViewUser, onBanUser }: UserColumnsOptions): ColumnDef<IUserListResponse>[] => [
     {
         id: "select",
         header: ({ table }) => (
@@ -151,7 +152,11 @@ export const columns = ({ onViewUser }: UserColumnsOptions): ColumnDef<IUserList
                         >
                             View customer
                         </DropdownMenuItem>
-                        <DropdownMenuItem>View payment details</DropdownMenuItem>
+                        <DropdownMenuItem
+                            onClick={() => onBanUser(user.id)}
+                        >
+                            Ban User
+                        </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             )

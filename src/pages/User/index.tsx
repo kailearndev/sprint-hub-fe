@@ -4,12 +4,13 @@ import { useUserList } from "@/hooks/users/useUserList";
 import type { PaginationState } from "@tanstack/react-table";
 import { useState } from "react";
 import { columns } from "./components/UserColumns";
-import UserSearch from "./components/UserSearch";
-import { toast } from "sonner";
-import type { IUserListResponse } from "@/types/user.type";
 import { UserDetail } from "./components/UserDetail";
+import UserSearch from "./components/UserSearch";
+import { useUserBan } from "@/hooks/users/useUserBan";
+import { toast } from "sonner";
 
 export default function User() {
+    const bannerUser = useUserBan()
     const [isOpenModal, setIsOpenModal] = useState({
         id: "",
         open: false,
@@ -40,6 +41,21 @@ export default function User() {
         });
 
     }
+
+    const handleBanUser = async (userId: string) => {
+        bannerUser.mutate(
+            { id: userId },
+            {
+                onSuccess: () => {
+                    toast.success("User banned successfully!");
+                },
+                onError: (error) => {
+                    toast.error(`Failed to ban user: ${error.message}`)
+                },
+            }
+        )
+        // Implement ban user logic here
+    }
     return (
         <section className="flex flex-col gap-4">
             <UserSearch
@@ -56,7 +72,10 @@ export default function User() {
 
             <DataTable
                 columns={columns({
-                    onViewUser: (userId) => handleOpenModal(userId)
+                    onViewUser: (userId) => handleOpenModal(userId),
+                    onBanUser: (userId) => {
+                        handleBanUser(userId);
+                    }
                 })}
                 data={users?.data || []}
                 pageCount={users?.meta.totalPages || 0}
