@@ -14,4 +14,5 @@ export interface IUserListResponse {
     createdAt: string
     updatedAt: string
     deletedAt: string
+    avatarUrl: string
 }

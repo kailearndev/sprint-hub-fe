@@ -22,6 +22,11 @@ export interface LoginDto {
   password: string;
 }
 
+export interface UpdateProfileDto {
+  name?: string;
+  avatarUrl?: string;
+}
+
 export type CreateUserDtoRole = typeof CreateUserDtoRole[keyof typeof CreateUserDtoRole];
 
 
@@ -47,10 +52,10 @@ export const UpdateUserDtoRole = {
 } as const;
 
 export interface UpdateUserDto {
-  email: string;
-  role: UpdateUserDtoRole;
-  name: string;
-  avatarUrl: string;
+  email?: string;
+  role?: UpdateUserDtoRole;
+  name?: string;
+  avatarUrl?: string;
 }
 
 export type AuditlogControllerFindAllParams = {
@@ -204,6 +209,17 @@ const usersControllerMe = (
       );
     }
 
+const usersControllerUpdateMe = (
+    updateProfileDto: UpdateProfileDto,
+ ) => {
+      return customInstance<void>(
+      {url: `/users/me`, method: 'PATCH',
+      headers: {'Content-Type': 'application/json', },
+      data: updateProfileDto
+    },
+      );
+    }
+
 const usersControllerCreate = (
     createUserDto: CreateUserDto,
  ) => {
@@ -255,7 +271,7 @@ const usersControllerRemove = (
       );
     }
 
-return {appControllerGetHello,authControllerRegister,authControllerLogin,authControllerRefresh,authControllerLogout,auditlogControllerFindAll,auditlogControllerFindOne,usersControllerMe,usersControllerCreate,usersControllerFindAll,usersControllerFindOne,usersControllerUpdate,usersControllerRemove}};
+return {appControllerGetHello,authControllerRegister,authControllerLogin,authControllerRefresh,authControllerLogout,auditlogControllerFindAll,auditlogControllerFindOne,usersControllerMe,usersControllerUpdateMe,usersControllerCreate,usersControllerFindAll,usersControllerFindOne,usersControllerUpdate,usersControllerRemove}};
 export type AppControllerGetHelloResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getSprintHubAPI>['appControllerGetHello']>>>
 export type AuthControllerRegisterResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getSprintHubAPI>['authControllerRegister']>>>
 export type AuthControllerLoginResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getSprintHubAPI>['authControllerLogin']>>>
@@ -264,6 +280,7 @@ export type AuthControllerLogoutResult = NonNullable<Awaited<ReturnType<ReturnTy
 export type AuditlogControllerFindAllResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getSprintHubAPI>['auditlogControllerFindAll']>>>
 export type AuditlogControllerFindOneResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getSprintHubAPI>['auditlogControllerFindOne']>>>
 export type UsersControllerMeResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getSprintHubAPI>['usersControllerMe']>>>
+export type UsersControllerUpdateMeResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getSprintHubAPI>['usersControllerUpdateMe']>>>
 export type UsersControllerCreateResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getSprintHubAPI>['usersControllerCreate']>>>
 export type UsersControllerFindAllResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getSprintHubAPI>['usersControllerFindAll']>>>
 export type UsersControllerFindOneResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getSprintHubAPI>['usersControllerFindOne']>>>

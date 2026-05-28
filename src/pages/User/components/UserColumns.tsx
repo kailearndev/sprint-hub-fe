@@ -19,7 +19,11 @@ import {
 import { Checkbox } from "@/components/ui/checkbox"
 import { toast } from "sonner"
 
-export const columns: ColumnDef<IUserListResponse>[] = [
+type UserColumnsOptions = {
+    onViewUser: (userId: string) => void
+}
+
+export const columns = ({ onViewUser }: UserColumnsOptions): ColumnDef<IUserListResponse>[] => [
     {
         id: "select",
         header: ({ table }) => (
@@ -126,7 +130,11 @@ export const columns: ColumnDef<IUserListResponse>[] = [
                             Copy user ID
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>View customer</DropdownMenuItem>
+                        <DropdownMenuItem
+                            onClick={() => onViewUser(user.id)}
+                        >
+                            View customer
+                        </DropdownMenuItem>
                         <DropdownMenuItem>View payment details</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>

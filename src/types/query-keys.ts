@@ -5,6 +5,7 @@ export const QUERY_KEYS = {
 
     users: {
         all: ['users'],
+        lists: () => ['users', 'list'] as const,
         list: (params?: UsersControllerFindAllParams) => ['users', 'list', params] as const,
         detail: (id: string | number) => ['users', 'detail', id] as const,
     },

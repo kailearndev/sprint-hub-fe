@@ -5,8 +5,15 @@ import type { PaginationState } from "@tanstack/react-table";
 import { useState } from "react";
 import { columns } from "./components/UserColumns";
 import UserSearch from "./components/UserSearch";
+import { toast } from "sonner";
+import type { IUserListResponse } from "@/types/user.type";
+import { UserDetail } from "./components/UserDetail";
 
 export default function User() {
+    const [isOpenModal, setIsOpenModal] = useState({
+        id: "",
+        open: false,
+    });
     const [searchTerm, setSearchTerm] = useState("");
     const [filters, setFilters] = useState<{
         role?: UsersControllerFindAllRole
@@ -17,7 +24,7 @@ export default function User() {
     })
     const [pagination, setPagination] = useState<PaginationState>({
         pageIndex: 0,
-        pageSize: 10,
+        pageSize: 5,
     })
     const { users, isLoading } = useUserList({
         page: pagination.pageIndex + 1,
@@ -26,7 +33,13 @@ export default function User() {
         role: filters.role,
         status: filters.status,
     })
+    const handleOpenModal = (userId: string) => {
+        setIsOpenModal({
+            id: userId,
+            open: true,
+        });
 
+    }
     return (
         <section className="flex flex-col gap-4">
             <UserSearch
@@ -42,13 +55,16 @@ export default function User() {
             />
 
             <DataTable
-                columns={columns}
+                columns={columns({
+                    onViewUser: (userId) => handleOpenModal(userId)
+                })}
                 data={users?.data || []}
                 pageCount={users?.meta.totalPages || 0}
                 pagination={pagination}
                 onPaginationChange={setPagination}
                 loading={isLoading}
             />
+            <UserDetail userId={isOpenModal.id} open={isOpenModal.open} onOpenChange={(open) => setIsOpenModal({ ...isOpenModal, open })} />
         </section>
     )
 }
